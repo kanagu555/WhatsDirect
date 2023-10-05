@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 const Header = () => {
   return (
-    <View style={styles.header}>
+    <View style={styles.headerContainer}>
       <Text style={styles.titleText}>WhatsDirect</Text>
     </View>
   );
@@ -11,14 +11,14 @@ const Header = () => {
 export default Header;
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#9FE2BF",
-    height: "20%",
-    alignItems: "center",
+  headerContainer: {
+    backgroundColor: "#128c7e",
+    height: "12%",
     justifyContent: "center",
   },
   titleText: {
-    fontFamily: 'Cochin',
-    fontSize: 35
-  }
+    fontSize: 35,
+    color: "#fff",
+    paddingLeft: 12,
+  },
 });
