@@ -1,8 +1,28 @@
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  Button,
+  Linking,
+} from "react-native";
+import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const WhatsForm = () => {
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const handlePhoneNumber = (number) => {
+    console.log(number);
+    setPhoneNumber(number);
+  };
+
+  const handleSendChat = () => {
+    const URL = `https://api.whatsapp.com/send/?phone=91-${phoneNumber}&text=Hello`;
+    Linking.openURL(URL);
+    setPhoneNumber("");
+  };
+
   return (
     <View>
       <Text>Phone Number</Text>
@@ -11,9 +31,11 @@ const WhatsForm = () => {
         placeholder="Enter Phone Number"
         keyboardType="numeric"
         secureTextEntry={false}
+        value={phoneNumber}
+        onChangeText={handlePhoneNumber}
       />
       <View style={styles.buttonStyle}>
-        <Button color={"#128c7e"} title="Start chat" />
+        <Button color={"#128c7e"} title="Start chat" onPress={handleSendChat} />
       </View>
     </View>
   );
