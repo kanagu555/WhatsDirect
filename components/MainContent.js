@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
+import WhatsForm from "./WhatsForm";
 
 const MainContent = () => {
   return (
     <View style={styles.mainContent}>
       <View style={styles.card}>
-        <Text>WhatsDirect Card</Text>
+        <WhatsForm />
       </View>
     </View>
   );
