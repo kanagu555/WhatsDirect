@@ -20,7 +20,7 @@ const WhatsForm = () => {
   const handleSendChat = () => {
     const URL = `https://api.whatsapp.com/send/?phone=91-${phoneNumber}&text=Hello`;
     Linking.openURL(URL);
-    setPhoneNumber("");
+        setPhoneNumber("");
   };
 
   return (
@@ -35,7 +35,12 @@ const WhatsForm = () => {
         onChangeText={handlePhoneNumber}
       />
       <View style={styles.buttonStyle}>
-        <Button color={"#128c7e"} title="Start chat" onPress={handleSendChat} />
+        <Button
+          color={"#128c7e"}
+          title="Start chat"
+          onPress={handleSendChat}
+          disabled={phoneNumber.length ? false : true}
+        />
       </View>
     </View>
   );
