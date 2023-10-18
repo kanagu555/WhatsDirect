@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
   Linking,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -14,7 +15,6 @@ const WhatsForm = () => {
   const [textMessage, setTextMessage] = useState("");
 
   const handlePhoneNumber = (number) => {
-    console.log(number);
     setPhoneNumber(number);
   };
 
@@ -24,6 +24,10 @@ const WhatsForm = () => {
   };
 
   const handleSendChat = () => {
+    if (!phoneNumber) {
+      ToastAndroid.show("Please enter phone number", ToastAndroid.SHORT);
+      return;
+    }
     const URL = `https://api.whatsapp.com/send/?phone=91-${phoneNumber}&text=${textMessage}`;
     Linking.openURL(URL);
   };
@@ -46,12 +50,7 @@ const WhatsForm = () => {
         onChangeText={handleTextMessage}
       />
       <View style={styles.buttonStyle}>
-        <Button
-          color={"#128c7e"}
-          title="Start chat"
-          onPress={handleSendChat}
-          disabled={phoneNumber.length ? false : true}
-        />
+        <Button color={"#128c7e"} title="Start chat" onPress={handleSendChat} />
       </View>
     </View>
   );
@@ -71,7 +70,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height: 40,
     fontSize: 20,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   buttonStyle: {
     marginTop: 15,
