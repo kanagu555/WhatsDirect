@@ -8,15 +8,17 @@ import {
   ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
+import * as Clipboard from "expo-clipboard";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const WhatsForm = () => {
+  const numRegex = /[^0-9]/g;
   const [phoneNumber, setPhoneNumber] = useState("");
   const [textMessage, setTextMessage] = useState("");
 
   const handlePhoneNumber = (number) => {
-    const numRegex = /^[0-9]*$/;
-    if (numRegex.test(number)) setPhoneNumber(number);
+    const replacedNum = number.replace(numRegex, "");
+    setPhoneNumber(replacedNum);
   };
 
   const handleTextMessage = (message) => {
@@ -31,6 +33,12 @@ const WhatsForm = () => {
     }
     const URL = `https://api.whatsapp.com/send/?phone=91-${phoneNumber}&text=${textMessage}`;
     Linking.openURL(URL);
+  };
+
+  const fetchCopiedText = async () => {
+    const number = await Clipboard.getStringAsync();
+    const copiedNum = number.replace(numRegex, "");
+    setPhoneNumber(copiedNum);
   };
 
   return (
