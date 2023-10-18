@@ -15,7 +15,8 @@ const WhatsForm = () => {
   const [textMessage, setTextMessage] = useState("");
 
   const handlePhoneNumber = (number) => {
-    setPhoneNumber(number);
+    const numRegex = /^[0-9]*$/;
+    if (numRegex.test(number)) setPhoneNumber(number);
   };
 
   const handleTextMessage = (message) => {
