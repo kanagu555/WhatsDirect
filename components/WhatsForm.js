@@ -11,16 +11,21 @@ import { SelectList } from "react-native-dropdown-select-list";
 
 const WhatsForm = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [textMessage, setTextMessage] = useState("");
 
   const handlePhoneNumber = (number) => {
     console.log(number);
     setPhoneNumber(number);
   };
 
+  const handleTextMessage = (message) => {
+    console.log(message);
+    setTextMessage(message);
+  };
+
   const handleSendChat = () => {
-    const URL = `https://api.whatsapp.com/send/?phone=91-${phoneNumber}&text=Hello`;
+    const URL = `https://api.whatsapp.com/send/?phone=91-${phoneNumber}&text=${textMessage}`;
     Linking.openURL(URL);
-        setPhoneNumber("");
   };
 
   return (
@@ -28,11 +33,17 @@ const WhatsForm = () => {
       <Text>Phone Number</Text>
       <TextInput
         style={styles.textInput}
-        placeholder="Enter Phone Number"
+        placeholder="Enter phone number"
         keyboardType="numeric"
         secureTextEntry={false}
         value={phoneNumber}
         onChangeText={handlePhoneNumber}
+      />
+      <Text>Enter Message</Text>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Enter text message"
+        onChangeText={handleTextMessage}
       />
       <View style={styles.buttonStyle}>
         <Button
@@ -60,6 +71,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height: 40,
     fontSize: 20,
+    marginBottom: 10,
   },
   buttonStyle: {
     marginTop: 15,
