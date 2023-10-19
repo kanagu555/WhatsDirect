@@ -10,6 +10,7 @@ import {
 import React, { useState } from "react";
 import * as Clipboard from "expo-clipboard";
 import Checkbox from "expo-checkbox";
+import { Ionicons } from "@expo/vector-icons";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const WhatsForm = () => {
@@ -80,11 +81,16 @@ const WhatsForm = () => {
         multiline
       />
       <View style={styles.buttonStyle}>
-        <Button
-          color={"#128c7e"}
-          title="Start chat"
-          onPress={handleDebounceSendChat(handleSendChat, 500)}
-        />
+        <Ionicons.Button
+          text="text"
+          name="md-send"
+          size={25}
+          color="white"
+          backgroundColor="#128c7e"
+          onPress={handleDebounceSendChat(handleSendChat, 200)}
+        >
+          <Text style={styles.buttonTitle}>START CHAT</Text>
+        </Ionicons.Button>
       </View>
     </View>
   );
@@ -123,6 +129,11 @@ const styles = StyleSheet.create({
   },
   checkBoxText: {
     marginLeft: 10,
+  },
+  buttonTitle: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 
