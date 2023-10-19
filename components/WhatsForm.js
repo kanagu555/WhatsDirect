@@ -59,11 +59,12 @@ const WhatsForm = () => {
         <Checkbox value={isSelected} onValueChange={fetchCopiedText} />
         <Text style={styles.checkBoxText}>Paste number from clipboard</Text>
       </View>
-      <Text>Enter Message</Text>
+      <Text style={styles.inputTitle}>Message</Text>
       <TextInput
-        style={styles.textInput}
+        style={[styles.textInput, styles.multilineTextInput]}
         placeholder="Enter text message"
         onChangeText={handleTextMessage}
+        multiline
       />
       <View style={styles.buttonStyle}>
         <Button color={"#128c7e"} title="Start chat" onPress={handleSendChat} />
@@ -82,11 +83,18 @@ const styles = StyleSheet.create({
   boxStyles: {
     borderWidth: 0,
   },
+  inputTitle: {
+    marginBottom: 10,
+  },
   textInput: {
     borderBottomWidth: 2,
     height: 40,
     fontSize: 20,
     marginBottom: 20,
+  },
+  multilineTextInput: {
+    height: 80,
+    textAlignVertical: "top",
   },
   buttonStyle: {
     marginTop: 15,
