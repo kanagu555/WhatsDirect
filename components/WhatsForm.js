@@ -37,6 +37,18 @@ const WhatsForm = () => {
     Linking.openURL(URL);
   };
 
+  const handleDebounceSendChat = (handleBtnFun, time) => {
+    let timeOutId;
+    return () => {
+      if (timeOutId) {
+        clearTimeout(timeOutId);
+      }
+      timeOutId = setTimeout(() => {
+        handleBtnFun();
+      }, time);
+    };
+  };
+
   const fetchCopiedText = async (isChecked) => {
     const number = await Clipboard.getStringAsync();
     const copiedNum = number.replace(numRegex, "");
@@ -54,6 +66,7 @@ const WhatsForm = () => {
         secureTextEntry={false}
         value={phoneNumber}
         onChangeText={handlePhoneNumber}
+        autoFocus
       />
       <View style={styles.checkBoxContainer}>
         <Checkbox value={isSelected} onValueChange={fetchCopiedText} />
@@ -67,7 +80,11 @@ const WhatsForm = () => {
         multiline
       />
       <View style={styles.buttonStyle}>
-        <Button color={"#128c7e"} title="Start chat" onPress={handleSendChat} />
+        <Button
+          color={"#128c7e"}
+          title="Start chat"
+          onPress={handleDebounceSendChat(handleSendChat, 500)}
+        />
       </View>
     </View>
   );
