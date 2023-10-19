@@ -9,12 +9,14 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import * as Clipboard from "expo-clipboard";
+import Checkbox from "expo-checkbox";
 import { SelectList } from "react-native-dropdown-select-list";
 
 const WhatsForm = () => {
   const numRegex = /[^0-9]/g;
   const [phoneNumber, setPhoneNumber] = useState("");
   const [textMessage, setTextMessage] = useState("");
+  const [isSelected, setIsSelected] = useState(false);
 
   const handlePhoneNumber = (number) => {
     const replacedNum = number.replace(numRegex, "");
@@ -35,10 +37,11 @@ const WhatsForm = () => {
     Linking.openURL(URL);
   };
 
-  const fetchCopiedText = async () => {
+  const fetchCopiedText = async (isChecked) => {
     const number = await Clipboard.getStringAsync();
     const copiedNum = number.replace(numRegex, "");
-    setPhoneNumber(copiedNum);
+    setPhoneNumber(isChecked ? copiedNum : "");
+    setIsSelected(!isSelected);
   };
 
   return (
@@ -52,6 +55,10 @@ const WhatsForm = () => {
         value={phoneNumber}
         onChangeText={handlePhoneNumber}
       />
+      <View style={styles.checkBoxContainer}>
+        <Checkbox value={isSelected} onValueChange={fetchCopiedText} />
+        <Text style={styles.checkBoxText}>Paste number from clipboard</Text>
+      </View>
       <Text>Enter Message</Text>
       <TextInput
         style={styles.textInput}
@@ -84,6 +91,13 @@ const styles = StyleSheet.create({
   buttonStyle: {
     marginTop: 15,
     alignSelf: "flex-end",
+  },
+  checkBoxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkBoxText: {
+    marginLeft: 10,
   },
 });
 
