@@ -1,24 +1,28 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import WhatsForm from "./WhatsForm";
 
 const MainContent = () => {
   return (
-    <View style={styles.mainContent}>
+    <ImageBackground
+      source={require("../assets/bgImg.jpg")}
+      style={styles.backgroundImage}
+    >
       <View style={styles.card}>
         <WhatsForm />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
 export default MainContent;
 
 const styles = StyleSheet.create({
-  mainContent: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: "#FFFFDD",
-    borderTopLeftRadius: 20,
+    resizeMode: "cover",
     borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    overflow: "hidden",
   },
   card: {
     backgroundColor: "white",
