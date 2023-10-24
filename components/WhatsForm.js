@@ -6,7 +6,8 @@ import {
   Button,
   Linking,
   ToastAndroid,
-  } from "react-native";
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import * as Clipboard from "expo-clipboard";
 import Checkbox from "expo-checkbox";
@@ -18,7 +19,7 @@ const WhatsForm = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [textMessage, setTextMessage] = useState("");
   const [isSelected, setIsSelected] = useState(false);
-  
+
   const handlePhoneNumber = (number) => {
     const replacedNum = number.replace(numRegex, "");
     setPhoneNumber(replacedNum);
@@ -28,7 +29,7 @@ const WhatsForm = () => {
     console.log(message);
     setTextMessage(message);
   };
- 
+
   const handleSendChat = () => {
     if (!phoneNumber) {
       ToastAndroid.show("Please enter phone number", ToastAndroid.SHORT);
@@ -54,6 +55,7 @@ const WhatsForm = () => {
     const number = await Clipboard.getStringAsync();
     const copiedNum = number.replace(numRegex, "");
     setPhoneNumber(isChecked ? copiedNum : "");
+    isChecked && Keyboard.dismiss();
     setIsSelected(!isSelected);
   };
 
