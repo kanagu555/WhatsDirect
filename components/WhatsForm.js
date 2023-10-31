@@ -13,6 +13,7 @@ import * as Clipboard from "expo-clipboard";
 import Checkbox from "expo-checkbox";
 import { Ionicons } from "@expo/vector-icons";
 import { SelectList } from "react-native-dropdown-select-list";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 const WhatsForm = () => {
   const numRegex = /[^0-9]/g;
@@ -72,8 +73,24 @@ const WhatsForm = () => {
         autoComplete="off"
       />
       <View style={styles.checkBoxContainer}>
-        <Checkbox value={isSelected} onValueChange={fetchCopiedText} />
-        <Text style={styles.checkBoxText}>Paste number from clipboard</Text>
+        <BouncyCheckbox
+          text="Paste number from clipboard"
+          isChecked={isSelected}
+          size={23}
+          fillColor="#128c7e"
+          textStyle={{
+            textDecorationLine: "none",
+            color: "black",
+          }}
+          iconStyle={{
+            borderRadius: 4,
+          }}
+          innerIconStyle={{
+            borderRadius: 4,
+            borderWidth: 2,
+          }}
+          onPress={fetchCopiedText}
+        />
       </View>
       <Text style={styles.inputTitle}>Message</Text>
       <TextInput
