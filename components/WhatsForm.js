@@ -69,6 +69,7 @@ const WhatsForm = () => {
         secureTextEntry={false}
         value={phoneNumber}
         onChangeText={handlePhoneNumber}
+        autoComplete="off"
       />
       <View style={styles.checkBoxContainer}>
         <Checkbox value={isSelected} onValueChange={fetchCopiedText} />
