@@ -27,7 +27,6 @@ const WhatsForm = () => {
   };
 
   const handleTextMessage = (message) => {
-    console.log(message);
     setTextMessage(message);
   };
 
