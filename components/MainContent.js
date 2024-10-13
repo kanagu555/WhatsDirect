@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import WhatsForm from "./WhatsForm";
+const bgImg = require("../assets/bgImg.jpg");
 
 const MainContent = () => {
   return (
-    <ImageBackground
-      source={require("../assets/bgImg.jpg")}
-      style={styles.backgroundImage}
-    >
+    <ImageBackground source={bgImg} style={styles.backgroundImage}>
       <View style={styles.card}>
         <WhatsForm />
       </View>
