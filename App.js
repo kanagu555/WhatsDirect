@@ -10,17 +10,33 @@ import {
 } from "react-native";
 import Header from "./components/Header";
 import MainContent from "./components/MainContent";
+import SplashScreen from "./components/SplashScreen";
+import { useEffect, useState } from "react";
 
 export default function App() {
+  const [isShowSplash, setIsShowSplash] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsShowSplash(false);
+    }, 3000);
+  }, []);
+
   const handleKeyboardDismiss = () => {
     Keyboard.dismiss();
   };
   return (
     <TouchableWithoutFeedback onPress={handleKeyboardDismiss}>
       <View style={styles.container}>
-        <StatusBar style="auto" />
-        <Header />
-        <MainContent />
+        {isShowSplash ? (
+          <SplashScreen />
+        ) : (
+          <>
+            <StatusBar style="auto" />
+            <Header />
+            <MainContent />
+          </>
+        )}
       </View>
     </TouchableWithoutFeedback>
   );
