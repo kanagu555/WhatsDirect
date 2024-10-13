@@ -101,7 +101,7 @@ const WhatsForm = () => {
       <View style={styles.buttonStyle}>
         <Ionicons.Button
           text="text"
-          name="md-send"
+          name="send"
           size={25}
           color="white"
           backgroundColor="#128c7e"
