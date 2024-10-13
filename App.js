@@ -17,9 +17,13 @@ export default function App() {
   const [isShowSplash, setIsShowSplash] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setIsShowSplash(false);
     }, 3000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const handleKeyboardDismiss = () => {
