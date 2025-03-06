@@ -18,7 +18,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DropDownPicker from "react-native-dropdown-picker";
 import Toast from "react-native-toast-message";
 import Header from "./Header";
-// import { countryCodes } from "../utils/countryCodes"
+import { countryCodes } from "../utils/countryCodes";
 import { FontAwesome, MaterialIcons, Feather } from "@expo/vector-icons";
 import * as Clipboard from "expo-clipboard";
 
@@ -33,11 +33,11 @@ export default function MainScreen() {
   console.log("Rendering MainScreen");
 
   const [open, setOpen] = useState(false);
-  const [countryCode, setCountryCode] = useState("+1"); // Default to US
-  const [selectedCountry, setSelectedCountry] = useState("us"); // Default to US
+  const [countryCode, setCountryCode] = useState("+91"); // Default to India
+  const [selectedCountry, setSelectedCountry] = useState("in"); // Default to India
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
-  //   const [items, setItems] = useState<CountryCodeItem[]>(countryCodes)
+  const [items, setItems] = useState<CountryCodeItem[]>(countryCodes);
   const [usePastedNumber, setUsePastedNumber] = useState(false);
   const [clipboardContent, setClipboardContent] = useState("");
 
@@ -142,7 +142,7 @@ export default function MainScreen() {
             <Text style={styles.sectionTitle}>Enter Contact Details</Text>
 
             <Text style={styles.label}>Country Code</Text>
-            {/* <DropDownPicker
+            <DropDownPicker
               open={open}
               value={countryCode}
               items={items}
@@ -160,10 +160,12 @@ export default function MainScreen() {
               }}
               closeOnBackPressed={true}
               closeAfterSelecting={true}
-              onSelectItem={(item) => handleCountrySelect(item as CountryCodeItem)}
+              onSelectItem={(item) =>
+                handleCountrySelect(item as CountryCodeItem)
+              }
               zIndex={3000}
               zIndexInverse={1000}
-            /> */}
+            />
 
             <Text style={[styles.label, { marginTop: open ? 120 : 20 }]}>
               Phone Number
