@@ -94,13 +94,19 @@ export default function MainScreen() {
       const cleanPhoneNumber = phoneNumber.replace(/\D/g, "");
 
       // Construct the WhatsApp URL
-      const whatsappUrl = `whatsapp://send?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
+    //   const whatsappUrl = `whatsapp://send?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
+    //     message
+    //   )}`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send/?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
         message
       )}`;
 
+      console.log('whatsappUrl:', whatsappUrl)
       // Open WhatsApp
       Linking.canOpenURL(whatsappUrl)
         .then((supported) => {
+            console.log('supported:', supported)
           if (supported) {
             return Linking.openURL(whatsappUrl);
           } else {
