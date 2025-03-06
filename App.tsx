@@ -2,17 +2,20 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import { NavigationContainer } from "@react-navigation/native";
 import { toastConfig } from "./utils/toastConfig";
-import MainScreen from "./components/MainScreen";
+// import MainScreen from "./components/MainScreen";
+import BottomTabs from "./components/navigation/BottomTabs";
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
-        <MainScreen />
-        <Toast config={toastConfig} />
+      <NavigationContainer>
         <StatusBar style="auto" />
-      </View>
+        {/* <MainScreen /> */}
+        <BottomTabs />
+        <Toast config={toastConfig} />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
