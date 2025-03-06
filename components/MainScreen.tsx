@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -13,70 +13,70 @@ import {
   ScrollView,
   Platform,
   Alert,
-} from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import DropDownPicker from "react-native-dropdown-picker"
-import Toast from "react-native-toast-message"
-// import Header from "../components/Header"
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import DropDownPicker from "react-native-dropdown-picker";
+import Toast from "react-native-toast-message";
+import Header from "./Header";
 // import { countryCodes } from "../utils/countryCodes"
-import { Phone, Send, Clipboard as ClipboardIcon, Check } from "lucide-react-native"
-import * as Clipboard from "expo-clipboard"
+import { FontAwesome, MaterialIcons, Feather } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
 
 interface CountryCodeItem {
-  label: string
-  value: string
-  country: string
-  dialCode: string
+  label: string;
+  value: string;
+  country: string;
+  dialCode: string;
 }
 
 export default function MainScreen() {
-  console.log("Rendering MainScreen")
+  console.log("Rendering MainScreen");
 
-  const [open, setOpen] = useState(false)
-  const [countryCode, setCountryCode] = useState("+1") // Default to US
-  const [selectedCountry, setSelectedCountry] = useState("us") // Default to US
-  const [phoneNumber, setPhoneNumber] = useState("")
-  const [message, setMessage] = useState("")
-//   const [items, setItems] = useState<CountryCodeItem[]>(countryCodes)
-  const [usePastedNumber, setUsePastedNumber] = useState(false)
-  const [clipboardContent, setClipboardContent] = useState("")
+  const [open, setOpen] = useState(false);
+  const [countryCode, setCountryCode] = useState("+1"); // Default to US
+  const [selectedCountry, setSelectedCountry] = useState("us"); // Default to US
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [message, setMessage] = useState("");
+  //   const [items, setItems] = useState<CountryCodeItem[]>(countryCodes)
+  const [usePastedNumber, setUsePastedNumber] = useState(false);
+  const [clipboardContent, setClipboardContent] = useState("");
 
-  const phoneInputRef = useRef<TextInput>(null)
+  const phoneInputRef = useRef<TextInput>(null);
 
   // Get clipboard content when checkbox is checked
   useEffect(() => {
     if (usePastedNumber) {
       const getClipboardContent = async () => {
         try {
-          const content = await Clipboard.getStringAsync()
+          const content = await Clipboard.getStringAsync();
           // Simple regex to extract numbers only
-          const numbersOnly = content.replace(/\D/g, "")
-          setClipboardContent(numbersOnly)
-          setPhoneNumber(numbersOnly)
+          const numbersOnly = content.replace(/\D/g, "");
+          setClipboardContent(numbersOnly);
+          setPhoneNumber(numbersOnly);
         } catch (error) {
-          console.error("Failed to get clipboard content", error)
+          console.error("Failed to get clipboard content", error);
           Toast.show({
             type: "error",
             text1: "Clipboard Error",
             text2: "Could not access clipboard content",
-          })
+          });
         }
-      }
+      };
 
-      getClipboardContent()
+      getClipboardContent();
     }
-  }, [usePastedNumber])
+  }, [usePastedNumber]);
 
   // Handle country selection
   const handleCountrySelect = (item: CountryCodeItem) => {
     try {
-      setCountryCode(item.dialCode) // Use dialCode instead of value
-      setSelectedCountry(item.country)
+      setCountryCode(item.dialCode); // Use dialCode instead of value
+      setSelectedCountry(item.country);
     } catch (error) {
-      console.error("Error in handleCountrySelect:", error)
-      Alert.alert("Error", "Failed to select country code")
+      console.error("Error in handleCountrySelect:", error);
+      Alert.alert("Error", "Failed to select country code");
     }
-  }
+  };
 
   const handleSendChat = () => {
     try {
@@ -86,27 +86,29 @@ export default function MainScreen() {
           type: "error",
           text1: "Phone number required",
           text2: "Please enter a valid phone number",
-        })
-        return
+        });
+        return;
       }
 
       // Remove any non-numeric characters from the phone number
-      const cleanPhoneNumber = phoneNumber.replace(/\D/g, "")
+      const cleanPhoneNumber = phoneNumber.replace(/\D/g, "");
 
       // Construct the WhatsApp URL
-      const whatsappUrl = `whatsapp://send?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(message)}`
+      const whatsappUrl = `whatsapp://send?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
+        message
+      )}`;
 
       // Open WhatsApp
       Linking.canOpenURL(whatsappUrl)
         .then((supported) => {
           if (supported) {
-            return Linking.openURL(whatsappUrl)
+            return Linking.openURL(whatsappUrl);
           } else {
             Toast.show({
               type: "error",
               text1: "WhatsApp not installed",
               text2: "Please install WhatsApp to use this feature",
-            })
+            });
           }
         })
         .catch((err) => {
@@ -114,25 +116,28 @@ export default function MainScreen() {
             type: "error",
             text1: "Something went wrong",
             text2: "Could not open WhatsApp",
-          })
-          console.error("An error occurred", err)
-        })
+          });
+          console.error("An error occurred", err);
+        });
     } catch (error) {
-      console.error("Error in handleSendChat:", error)
-      Alert.alert("Error", "Failed to send WhatsApp message")
+      console.error("Error in handleSendChat:", error);
+      Alert.alert("Error", "Failed to send WhatsApp message");
     }
-  }
+  };
 
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        Keyboard.dismiss()
-        if (open) setOpen(false)
+        Keyboard.dismiss();
+        if (open) setOpen(false);
       }}
     >
       <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
-        {/* <Header /> */}
-        <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
+        <Header />
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+        >
           <View style={styles.formContainer}>
             <Text style={styles.sectionTitle}>Enter Contact Details</Text>
 
@@ -160,9 +165,16 @@ export default function MainScreen() {
               zIndexInverse={1000}
             /> */}
 
-            <Text style={[styles.label, { marginTop: open ? 120 : 20 }]}>Phone Number</Text>
+            <Text style={[styles.label, { marginTop: open ? 120 : 20 }]}>
+              Phone Number
+            </Text>
             <View style={styles.inputContainer}>
-              <Phone size={20} color="#666" style={styles.inputIcon} />
+              <FontAwesome
+                name="phone"
+                size={20}
+                color="#666"
+                style={styles.inputIcon}
+              />
               <TextInput
                 ref={phoneInputRef}
                 style={styles.input}
@@ -178,12 +190,24 @@ export default function MainScreen() {
               onPress={() => setUsePastedNumber(!usePastedNumber)}
               activeOpacity={0.7}
             >
-              <View style={[styles.checkbox, usePastedNumber && styles.checkboxChecked]}>
-                {usePastedNumber && <Check size={14} color="#fff" />}
+              <View
+                style={[
+                  styles.checkbox,
+                  usePastedNumber && styles.checkboxChecked,
+                ]}
+              >
+                {usePastedNumber && (
+                  <Feather name="check" size={14} color="#fff" />
+                )}
               </View>
               <View style={styles.checkboxLabelContainer}>
                 <Text style={styles.checkboxLabel}>Use clipboard number</Text>
-                <ClipboardIcon size={16} color="#666" style={styles.clipboardIcon} />
+                <FontAwesome
+                  name="clipboard"
+                  size={16}
+                  color="#666"
+                  style={styles.clipboardIcon}
+                />
               </View>
             </TouchableOpacity>
 
@@ -198,15 +222,24 @@ export default function MainScreen() {
               />
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleSendChat} activeOpacity={0.8}>
-              <Send size={18} color="#fff" style={styles.buttonIcon} />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSendChat}
+              activeOpacity={0.8}
+            >
+              <MaterialIcons
+                name="send"
+                size={18}
+                color="#fff"
+                style={styles.buttonIcon}
+              />
               <Text style={styles.buttonText}>Send WhatsApp Message</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
       </SafeAreaView>
     </TouchableWithoutFeedback>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -335,5 +368,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
-})
-
+});

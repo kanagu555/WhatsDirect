@@ -3,14 +3,13 @@ import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { toastConfig } from "./utils/toastConfig";
-// import MainScreen from "./components/MainScreen";
+import MainScreen from "./components/MainScreen";
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <Text>Open up App.tsx to start working on your app!!!</Text>
-        {/* <MainScreen /> */}
+        <MainScreen />
         <Toast config={toastConfig} />
         <StatusBar style="auto" />
       </View>
