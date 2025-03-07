@@ -33,8 +33,8 @@ export default function MainScreen() {
   console.log("Rendering MainScreen");
 
   const [open, setOpen] = useState(false);
-  const [countryCode, setCountryCode] = useState("+91"); // Default to India
-  const [selectedCountry, setSelectedCountry] = useState("in"); // Default to India
+  const [countryCode, setCountryCode] = useState(""); // Default to India
+  const [selectedCountry, setSelectedCountry] = useState(""); // Default to India
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
   const [items, setItems] = useState<CountryCodeItem[]>(countryCodes);
@@ -89,42 +89,42 @@ export default function MainScreen() {
         });
         return;
       }
+      if (!countryCode.trim()) {
+        Toast.show({
+          type: "error",
+          text1: "Country code required",
+          text2: "Please select a valid country code",
+        });
+        return;
+      }
 
       // Remove any non-numeric characters from the phone number
       const cleanPhoneNumber = phoneNumber.replace(/\D/g, "");
 
-      // Construct the WhatsApp URL
-    //   const whatsappUrl = `whatsapp://send?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
-    //     message
-    //   )}`;
+      // Remove the + and any hyphens from the country code if present
+      const cleanCountryCode = countryCode.replace("+", "").split("-")[0];
 
-      const whatsappUrl = `https://api.whatsapp.com/send/?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
+      // Construct the WhatsApp URL - use the correct format without the +
+      const whatsappUrl = `whatsapp://send?phone=${cleanCountryCode}-${cleanPhoneNumber}&text=${encodeURIComponent(
         message
       )}`;
 
-      console.log('whatsappUrl:', whatsappUrl)
+      console.log(
+        "Opening WhatsApp with URL:",
+        whatsappUrl,
+        "||",
+        cleanCountryCode,
+        "||",
+        cleanPhoneNumber
+      );
+
+      //   const whatsappUrl = `https://api.whatsapp.com/send/?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
+      //     message
+      //   )}`;
+
+      console.log("whatsappUrl:", whatsappUrl);
       // Open WhatsApp
-      Linking.canOpenURL(whatsappUrl)
-        .then((supported) => {
-            console.log('supported:', supported)
-          if (supported) {
-            return Linking.openURL(whatsappUrl);
-          } else {
-            Toast.show({
-              type: "error",
-              text1: "WhatsApp not installed",
-              text2: "Please install WhatsApp to use this feature",
-            });
-          }
-        })
-        .catch((err) => {
-          Toast.show({
-            type: "error",
-            text1: "Something went wrong",
-            text2: "Could not open WhatsApp",
-          });
-          console.error("An error occurred", err);
-        });
+      Linking.openURL(whatsappUrl);
     } catch (error) {
       console.error("Error in handleSendChat:", error);
       Alert.alert("Error", "Failed to send WhatsApp message");
