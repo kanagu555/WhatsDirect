@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -164,6 +164,11 @@ export default function MainScreen() {
               scrollViewProps={{
                 nestedScrollEnabled: true,
               }}
+              itemSeparator={true}
+              itemSeparatorStyle={{
+                backgroundColor: "#eee",
+                height: 1,
+              }}
               closeOnBackPressed={true}
               closeAfterSelecting={true}
               onSelectItem={(item) =>
@@ -171,9 +176,10 @@ export default function MainScreen() {
               }
               zIndex={3000}
               zIndexInverse={1000}
+              maxHeight={270}
             />
 
-            <Text style={[styles.label, { marginTop: open ? 120 : 20 }]}>
+            <Text style={styles.label}>
               Phone Number
             </Text>
             <View style={styles.inputContainer}>
@@ -315,6 +321,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
   },
   dropdown: {
+    marginBottom: 10,
     borderColor: "#ddd",
     borderRadius: 12,
     backgroundColor: "#fafafa",
