@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { BackHandler, Platform } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -9,10 +9,9 @@ import MainScreen from "./components/MainScreen";
 // import BottomTabs from "./components/navigation/BottomTabs";
 // import Test from "./components/Test";
 
-export default function App() {
+const App = () => {
   const [backPressedOnce, setBackPressedOnce] = useState(false);
 
-  // Handle back button press
   useEffect(() => {
     const backAction = () => {
       if (Platform.OS === "android") {
@@ -58,3 +57,5 @@ export default function App() {
     </SafeAreaProvider>
   );
 }
+
+export default App;

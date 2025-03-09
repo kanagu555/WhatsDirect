@@ -33,13 +33,11 @@ export default function MainScreen() {
   console.log("Rendering MainScreen");
 
   const [open, setOpen] = useState(false);
-  const [countryCode, setCountryCode] = useState(""); // Default to India
-  const [selectedCountry, setSelectedCountry] = useState(""); // Default to India
+  const [countryCode, setCountryCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
   const [items, setItems] = useState<CountryCodeItem[]>(countryCodes);
   const [usePastedNumber, setUsePastedNumber] = useState(false);
-  const [clipboardContent, setClipboardContent] = useState("");
 
   const phoneInputRef = useRef<TextInput>(null);
 
@@ -51,7 +49,6 @@ export default function MainScreen() {
           const content = await Clipboard.getStringAsync();
           // Simple regex to extract numbers only
           const numbersOnly = content.replace(/\D/g, "");
-          setClipboardContent(numbersOnly);
           setPhoneNumber(numbersOnly);
         } catch (error) {
           console.error("Failed to get clipboard content", error);
@@ -71,7 +68,6 @@ export default function MainScreen() {
   const handleCountrySelect = (item: CountryCodeItem) => {
     try {
       setCountryCode(item.dialCode); // Use dialCode instead of value
-      setSelectedCountry(item.country);
     } catch (error) {
       console.error("Error in handleCountrySelect:", error);
       Alert.alert("Error", "Failed to select country code");
@@ -108,15 +104,6 @@ export default function MainScreen() {
       const whatsappUrl = `whatsapp://send?phone=${cleanCountryCode}-${cleanPhoneNumber}&text=${encodeURIComponent(
         message
       )}`;
-
-      console.log(
-        "Opening WhatsApp with URL:",
-        whatsappUrl,
-        "||",
-        cleanCountryCode,
-        "||",
-        cleanPhoneNumber
-      );
 
       //   const whatsappUrl = `https://api.whatsapp.com/send/?phone=${countryCode}${cleanPhoneNumber}&text=${encodeURIComponent(
       //     message
@@ -179,9 +166,7 @@ export default function MainScreen() {
               maxHeight={270}
             />
 
-            <Text style={styles.label}>
-              Phone Number
-            </Text>
+            <Text style={styles.label}>Phone Number</Text>
             <View style={styles.inputContainer}>
               <FontAwesome
                 name="phone"
@@ -264,7 +249,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     padding: 20,
-    paddingBottom: Platform.OS === "ios" ? 100 : 80, // Add extra padding at the bottom for iOS
+    paddingBottom: Platform.OS === "ios" ? 100 : 80,
   },
   formContainer: {
     backgroundColor: "#fff",
@@ -362,7 +347,7 @@ const styles = StyleSheet.create({
     marginLeft: 6,
   },
   button: {
-    backgroundColor: "#25D366", // WhatsApp green
+    backgroundColor: "#25D366",
     borderRadius: 12,
     padding: 16,
     flexDirection: "row",
